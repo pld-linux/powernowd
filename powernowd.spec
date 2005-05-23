@@ -55,10 +55,6 @@ fi
 %files
 %defattr(644,root,root,755)
 %doc README
-%config(noreplace) %verify(not md5 mtime size) /etc/sysconfig/%{name}
 %attr(755,root,root) %{_sbindir}/*
-%attr(754,root,root) /etc/rc.d/init.d/%{name}
-
-# initscript and its config
 %attr(754,root,root) /etc/rc.d/init.d/%{name}
 %config(noreplace) %verify(not md5 mtime size) /etc/sysconfig/%{name}
