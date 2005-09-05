@@ -23,7 +23,7 @@ bezczynno¶ci.
 %setup -q
 
 %build
-gcc %{rpmcflags} %{rpmldflags} -o powernowd powernowd.c
+%{__cc} %{rpmcflags} %{rpmldflags} -o powernowd powernowd.c
 
 %install
 rm -rf $RPM_BUILD_ROOT
