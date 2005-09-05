@@ -1,5 +1,4 @@
-# Customized setings for acpid
+# Customized setings for powernowd
 
 # Program arguments:(powernowd -h for help)
 PROGRAM_ARGS=""
-
