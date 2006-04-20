@@ -10,6 +10,8 @@ Source0:	http://www.deater.net/john/%{name}-%{version}.tar.gz
 Source1:	%{name}.init
 Source2:	%{name}.sysconfig
 URL:		http://www.deater.net/john/powernowd.html
+Requires(post,preun):	/sbin/chkconfig
+Requires:	rc-scripts
 BuildRoot:	%{tmpdir}/%{name}-%{version}-root-%(id -u -n)
 
 %description
@@ -38,17 +40,11 @@ rm -rf $RPM_BUILD_ROOT
 
 %post
 /sbin/chkconfig --add powernowd
-if [ -f /var/lock/subsys/powernowd ]; then
-	/etc/rc.d/init.d/powernowd restart >&2
-else
-	echo "Run \"/etc/rc.d/init.d/powernowd start\" to start powernowd daemon."
-fi
+%service powernowd restart "powernowd daemon"
 
 %preun
 if [ "$1" = "0" ]; then
-	if [ -f /var/lock/subsys/powernowd ]; then
-		/etc/rc.d/init.d/powernowd stop>&2
-	fi
+	%service powernowd stop
 	/sbin/chkconfig --del powernowd
 fi
 
