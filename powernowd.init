@@ -14,6 +14,8 @@
 # Configuration file.
 . /etc/sysconfig/powernowd
 
+SYSDIR="/sys/devices/system/cpu/cpu0/cpufreq"
+
 RETVAL=0
 # See how we were called.
 case "$1" in
@@ -21,24 +23,29 @@ case "$1" in
 	# Start daemons.
 	if [ ! -f /var/lock/subsys/powernowd ]; then
         LOADMODULE="no"
-		if [ ! -f \
-            /sys/devices/system/cpu/cpu0/cpufreq/scaling_available_governors \
-            ]; then
+		if [ ! -f $SYSDIR/scaling_available_governors ]; then
             LOADMODULE="yes"
         else
-            if [ -z "` \
-                    grep userspace \
-                    /sys/devices/system/cpu/cpu0/cpufreq/scaling_available_governors \
-                `" ]; then
+            if grep -q userspace $SYSDIR/scaling_available_governors; then
                 LOADMODULE="yes"
             fi
 		fi
         if [ "$LOADMODULE" -eq "yes" ]; then
             _modprobe cpufreq_userspace
         fi
+
+		ARGS=""
+		ARGS="$ARGS ${OPERATION_MODE:+-m $OPERATION_MODE}"
+		ARGS="$ARGS ${FREQUENCY_STEP:+-s $FREQUENCY_STEP}"
+		ARGS="$ARGS ${POLLING_FREQUENCY:+-p $POLLING_FREQUENCY}"
+		ARGS="$ARGS ${THREADS_COUNT:+-c $THREADS_COUNT}"
+		ARGS="$ARGS ${CPU_UPPER:+-u $CPU_UPPER}"
+		ARGS="$ARGS ${CPU_LOWER:+-l $CPU_LOWER}"
+		ARGS="$ARGS ${PROGRAM_ARGS}"
+
 		# starting:
-		msg_starting powernowd $PROGRAM_ARGS
-		daemon powernowd
+		msg_starting powernowd
+		daemon powernowd $ARGS
 		RETVAL=$?
 		[ $RETVAL -eq 0 ] && touch /var/lock/subsys/powernowd
 	else
