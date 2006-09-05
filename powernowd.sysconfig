@@ -1,4 +1,23 @@
 # Customized settings for powernowd
 
-# Program arguments: (powernowd -h for help)
-PROGRAM_ARGS=""
+# Modes of operation, can be 0, 1, 2, or 3:
+# 0 = SINE, 1 = AGGRESSIVE (default), 2 = PASSIVE, 3 = LEAPS
+#OPERATION_MODE="1"
+
+# Frequency step in kHz (default = 100000)
+#FREQUENCY_STEP="100000"
+
+# Polling frequency in msecs (default = 1000)
+#POLLING_FREQUENCY="1000"
+
+# Specify number of threads per power-managed core
+#THREADS_COUNT=""
+
+# CPU usage upper limit percentage [0 .. 100, default 80]
+#CPU_UPPER="80"
+
+# CPU usage lower limit percentage [0 .. 100, default 20]
+#CPU_LOWER="20"
+
+# Other program arguments: (powernowd -h for help)
+#PROGRAM_ARGS=""
