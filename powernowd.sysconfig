@@ -1,4 +1,4 @@
-# Customized setings for powernowd
+# Customized settings for powernowd
 
-# Program arguments:(powernowd -h for help)
+# Program arguments: (powernowd -h for help)
 PROGRAM_ARGS=""
