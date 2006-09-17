@@ -16,10 +16,7 @@
 
 SYSDIR="/sys/devices/system/cpu/cpu0/cpufreq"
 
-RETVAL=0
-# See how we were called.
-case "$1" in
-  start)
+start() {
 	# Start daemons.
 	if [ ! -f /var/lock/subsys/powernowd ]; then
         LOADMODULE="no"
@@ -51,8 +48,9 @@ case "$1" in
 	else
 		msg_already_running powernowd
 	fi
-	;;
-  stop)
+}
+
+stop() {
 	# Stop daemons.
 	if [ -f /var/lock/subsys/powernowd ]; then
 		msg_stopping powernowd
@@ -61,6 +59,16 @@ case "$1" in
 	else
 		msg_not_running powernowd
 	fi
+}
+
+RETVAL=0
+# See how we were called.
+case "$1" in
+  start)
+  	start
+	;;
+  stop)
+  	stop
 	;;
   reload|force-reload)
 	if [ -f /var/lock/subsys/powernowd ]; then
@@ -73,9 +81,8 @@ case "$1" in
 	fi
 	;;
   restart)
-	$0 stop
-	$0 start
-	exit $?
+	stop
+	start
 	;;
   status)
 	status powernowd
