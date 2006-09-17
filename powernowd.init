@@ -68,7 +68,7 @@ case "$1" in
 		killproc powernowd -HUP
 		RETVAL=$?
 	else
-		msg_not_running powernowd >&2
+		msg_not_running powernowd
 		exit 7
 	fi
 	;;
