@@ -1,5 +1,5 @@
 Summary:	CPU frequency scaling daemon
-Summary(pl):	Demon skalowania czÍstotliwo∂ci procesora
+Summary(pl.UTF-8):   Demon skalowania czƒôstotliwo≈õci procesora
 Name:		powernowd
 Version:	0.97
 Release:	1
@@ -17,9 +17,9 @@ BuildRoot:	%{tmpdir}/%{name}-%{version}-root-%(id -u -n)
 %description
 Powernowd reduces CPU's freuency when it is idle.
 
-%description -l pl
-Powernowd s≥uøy do zmniejszania czÍstotliwo∂ci procesora podczas jego
-bezczynno∂ci.
+%description -l pl.UTF-8
+Powernowd s≈Çu≈ºy do zmniejszania czƒôstotliwo≈õci procesora podczas jego
+bezczynno≈õci.
 
 %prep
 %setup -q
