@@ -42,7 +42,7 @@ start() {
 
 		# starting:
 		msg_starting powernowd
-		daemon powernowd $ARGS
+		daemon /usr/sbin/powernowd $ARGS
 		RETVAL=$?
 		[ $RETVAL -eq 0 ] && touch /var/lock/subsys/powernowd
 	else
