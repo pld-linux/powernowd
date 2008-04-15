@@ -2,7 +2,7 @@ Summary:	CPU frequency scaling daemon
 Summary(pl.UTF-8):	Demon skalowania częstotliwości procesora
 Name:		powernowd
 Version:	1.00
-Release:	1
+Release:	2
 License:	GPL
 Group:		Daemons
 Source0:	http://www.deater.net/john/%{name}-%{version}.tar.gz
