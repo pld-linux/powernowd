@@ -31,6 +31,10 @@ start() {
             _modprobe cpufreq_userspace
         fi
 
+		if [ ! -d $SYSDIR ]; then
+			return
+		fi
+
 		ARGS=""
 		ARGS="$ARGS ${OPERATION_MODE:+-m $OPERATION_MODE}"
 		ARGS="$ARGS ${FREQUENCY_STEP:+-s $FREQUENCY_STEP}"
@@ -42,7 +46,7 @@ start() {
 
 		# starting:
 		msg_starting powernowd
-		daemon /usr/sbin/powernowd $ARGS
+		daemon /usr/sbin/powernowd -q $ARGS
 		RETVAL=$?
 		[ $RETVAL -eq 0 ] && touch /var/lock/subsys/powernowd
 	else
