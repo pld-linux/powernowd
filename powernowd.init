@@ -65,6 +65,27 @@ stop() {
 	fi
 }
 
+reload() {
+	if [ -f /var/lock/subsys/powernowd ]; then
+		msg_reloading powernowd
+		killproc powernowd -HUP
+		RETVAL=$?
+	else
+		msg_not_running powernowd
+		exit 7
+	fi
+}
+
+condrestart() {
+	if [ -f /var/lock/subsys/powernowd ]; then
+		stop
+		start
+	else
+		msg_not_running powernowd
+		RETVAL=$1
+	fi
+}
+
 RETVAL=0
 # See how we were called.
 case "$1" in
@@ -74,26 +95,22 @@ case "$1" in
   stop)
   	stop
 	;;
-  reload|force-reload)
-	if [ -f /var/lock/subsys/powernowd ]; then
-		msg_reloading powernowd
-		killproc powernowd -HUP
-		RETVAL=$?
-	else
-		msg_not_running powernowd
-		exit 7
-	fi
-	;;
   restart)
 	stop
 	start
+	;;
+  try-restart)
+	condrestart 0
+	;;
+  reload|force-reload)
+  	reload
 	;;
   status)
 	status powernowd
 	exit $?
 	;;
   *)
-	msg_usage "$0 {start|stop|restart|reload|force-reload|status}"
+	msg_usage "$0 {start|stop|restart|try-restart|reload|force-reload|status}"
 	exit 3
 esac
 
